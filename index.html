@@ -1,1 +1,122 @@
-Hello World!
+<!DOCTYPE html>
+<html>
+<head>
+<script
+  src="https://code.jquery.com/jquery-3.6.3.min.js"
+  integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
+  crossorigin="anonymous"></script>
+  <script>
+function calcola() {
+
+	const year = $("#anno").val();
+	const anni = $("#anni").val();
+	const inquadramento = $("#inquadramento").val();
+	
+	const exFestivita = calcolaExFestivita(year);
+	const ferie = calcolaFerie(anni, inquadramento);
+	const festivitaCiviliCadentiDiDomenica = calcolaFestivitaCiviliCadentiDiDomenica(year);
+	const exArticolo56 = "1";
+  $("#ferie").text("Ferie: "+ ferie + " giorni");
+  $("#festivitaCiviliCadentiDiDomenica").text("Festività cadenti di domenica: " + festivitaCiviliCadentiDiDomenica + " giorni");
+  $("#exFestivita").text("Ex Festività: " + exFestivita + "giorni")
+  $("#exArticolo56").text("Ex Art. 56: " + exArticolo56 +" giorni");
+}
+
+function calcolaExFestivita(year){
+	let exFestivita = 0;
+	if(new Date("03/19/" + year).getDay() % 6 !== 0){
+		exFestivita += 1;
+	}
+	if(new Date("05/18/" + year).getDay() % 6 !== 0){
+		exFestivita += 1;
+	}
+	if(new Date("06/08/" + year).getDay() % 6 !== 0){
+		exFestivita += 1;
+	}
+	if(new Date("06/29/" + year).getDay() % 6 !== 0){
+		exFestivita += 1;
+	}
+	if(new Date("11/04/" + year).getDay() % 6 !== 0){
+		exFestivita += 1;
+	}
+	return exFestivita;
+}
+
+function calcolaFestivitaCiviliCadentiDiDomenica(year){
+	let festivita = 0;
+	if(new Date("04/25/" + year).getDay() % 6 === 0){
+		festivita += 1;
+	}
+	if(new Date("05/01/" + year).getDay() % 6 === 0){
+		festivita += 1;
+	}
+	if(new Date("06/02/" + year).getDay() % 6 === 0){
+		festivita += 1;
+	}
+	return festivita;
+}
+
+function calcolaFerie(anni, inquadramento){
+	if(inquadramento == "quadro"){
+		return "26";
+	}
+	
+	if(inquadramento == "4"){
+		if(anni == 0){
+			return 22;
+		}
+		if(anni == 5){
+			return 22;
+		}
+		if(anni == 10){
+			return 25;
+		}
+	}
+		if(inquadramento == "altro"){
+		if(anni == 0){
+			return 20;
+		}
+		if(anni == 5){
+			return 22;
+		}
+		if(anni == 10){
+			return 25;
+		}
+	}
+	return "Error!";
+}
+</script>
+  </head>
+<body>
+<p>
+	<label for="html">Inquadramento:</label>
+	<select name="inquadramento" id="inquadramento">
+		<option value="altro">Area Minori</option>
+	  <option value="4">III area professionale, 4° livello retributivo</option>
+	  <option value="quadro">Quadro</option>
+	</select>
+</p>
+<p>
+	<label for="html">Anni di Servizio:</label>
+	<select name="anni" id="anni">
+	  <option value="0">0-4</option>
+	  <option value="5">5-9</option>
+	  <option value="10">>10</option>
+	</select>
+</p>
+<p>
+	<label for="html">Anno di riferimento:</label>
+	<input type="number" id="anno" name="anno"
+		   min="2000" max="2100" value="2023">
+	</p>
+	<p>
+	<button onclick="calcola()">Calcola</button>
+</p>
+<p>
+	<div id="ferie"></div>
+	<div id="festivitaCiviliCadentiDiDomenica"></div>
+	<div id="exFestivita"></div>
+	<div id="exArticolo56"></div>
+</p>
+</body>
+</html>
