@@ -44,13 +44,13 @@
 			
 			function calcolaFestivitaCiviliCadentiDiDomenica(year){
 				let festivita = 0;
-				if(new Date("04/25/" + year).getDay() % 6 === 0){
+				if(new Date("04/25/" + year).getDay() === 0){
 					festivita += 1;
 				}
-				if(new Date("05/01/" + year).getDay() % 6 === 0){
+				if(new Date("05/01/" + year).getDay() === 0){
 					festivita += 1;
 				}
-				if(new Date("06/02/" + year).getDay() % 6 === 0){
+				if(new Date("06/02/" + year).getDay() === 0){
 					festivita += 1;
 				}
 				return festivita;
